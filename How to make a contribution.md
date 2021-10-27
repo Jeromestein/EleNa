@@ -4,7 +4,7 @@
 
 Click **Fork** button in this page (https://github.com/Jeromestein/EleNa) and then you can find this project repo in your account page.
 
-![image-20211026221451192](images/Fork in Github.png)
+![image-20211026221451192](images/ForkinGithub.png)
 
 ## 2. Clone repo locally
 
