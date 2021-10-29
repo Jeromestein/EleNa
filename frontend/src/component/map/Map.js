@@ -1,6 +1,6 @@
 import React from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
-import RoutingMachine from "./RoutingMachine";
+import RoutingMachine from "../../RoutingMachine";
 import 'leaflet/dist/leaflet.css'
 
 const Map = (props) => {
