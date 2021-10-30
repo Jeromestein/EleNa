@@ -13,7 +13,7 @@ some loaders
 
 ## 2. Architecture Diagram
 
-undecided
+![Alt text](../images/frontEndDiagram.png?raw=true "Title")
 
 states: maxMin, percentage, instruction array, route information
 
