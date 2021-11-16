@@ -6,7 +6,7 @@ import Menu from "../inputMenu/menu";
 
 const Map = (props) => {
   return (
-    <MapContainer
+    <MapContainer style={{zIndex:1}}
       doubleClickZoom={false}
       id="mapId"
       zoom={14}
