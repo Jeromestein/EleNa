@@ -1,12 +1,12 @@
-import Slider from "./slider";
-import Switch from "./switch";
+import Slide from "./slider";
+import MinMax from "./switch";
 import TextInput from "./textInput";
 
 
 export default function Menu (){
     return <div>
-        <Slider/>
-        <Switch/>
+        <Slide/>
+        <MinMax/>
         <TextInput/>
     </div>
 }

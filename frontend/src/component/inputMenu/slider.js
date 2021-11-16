@@ -6,7 +6,7 @@ function valuetext(value) {
   return `${value}°C`;
 }
 
-export default function Slider() {
+export default function Slide() {
   return (
     <Box sx={{ width: 300 }}>
       <Slider
