@@ -4,6 +4,7 @@ import Map from "./component/map/Map";
 import { useState } from "react";
 
 import "./styles.css";
+import Display from "./component/output/output";
 
 export default function App() {
 
@@ -17,6 +18,7 @@ export default function App() {
     <div className="App">
       
       <Menu/>
+      <Display/>
       <Map />
     </div>
   );
