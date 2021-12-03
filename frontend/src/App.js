@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import "./styles.css";
 import Display from "./component/output/output";
+import SwitchDisplay from "./component/collapse/display";
 
 export default function App() {
 
@@ -13,12 +14,22 @@ export default function App() {
   let [destination, SetDestination] = useState(-72.52514801414911)
   let [percentage,setPercentage] = useState(1)
   let [route, SetRoute] = useState([])
+  let [MC, setMC] = useState(false);
+  let [DC, setDC] = useState(true);
+
+  function SwitchC(){
+    setMC(!MC);
+  }
+
+  function SwitchD(){
+    setDC(!DC);
+  }
 
   return (
     <div className="App">
-      
-      <Menu/>
-      <Display/>
+      <SwitchDisplay ape={SwitchD}/>
+      <Menu collapse={false}/>
+      <Display collapse={DC}/>
       <Map />
     </div>
   );

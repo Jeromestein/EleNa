@@ -14,9 +14,9 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function Display() {
+export default function Display(props) {
   return (
-    <Collapse in={false} >
+    <Collapse in={props.collapse} >
     <Box style={{
         position: "absolute",
         left: 50,
