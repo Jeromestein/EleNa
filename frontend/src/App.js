@@ -14,22 +14,11 @@ export default function App() {
   let [destination, SetDestination] = useState(-72.52514801414911)
   let [percentage,setPercentage] = useState(1)
   let [route, SetRoute] = useState([])
-  let [MC, setMC] = useState(false);
-  let [DC, setDC] = useState(true);
-
-  function SwitchC(){
-    setMC(!MC);
-  }
-
-  function SwitchD(){
-    setDC(!DC);
-  }
 
   return (
     <div className="App">
-      <SwitchDisplay ape={SwitchD}/>
-      <Menu collapse={false}/>
-      <Display collapse={DC}/>
+      <Menu/>
+      <Display/>
       <Map />
     </div>
   );

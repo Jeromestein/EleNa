@@ -1,12 +1,19 @@
 import * as React from 'react';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-
+import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
+import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
+import Box from '@mui/material/Box';
 export default function SwitchDisplay(props) {
-  return (
-    <FormGroup>
-      <FormControlLabel disabled control={<Switch />} label="Disabled Display" onClick={(e)=>props.ape()} />
-    </FormGroup>
-  );
+  if (!props.off){
+    return (
+    
+      <UnfoldMoreIcon onClick={e=>props.ape()}/>
+    );
+  }
+
+  else{
+    return (
+      <UnfoldLessIcon onClick={e=>props.ape()}/>
+    )
+  }
+  
 }

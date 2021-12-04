@@ -6,6 +6,8 @@ import { styled } from '@mui/material/styles';
 import Listed from "./list";
 import { Divider, Typography } from '@mui/material';
 import { Collapse } from '@mui/material';
+import SwitchDisplay from '../collapse/display';
+import { useState } from 'react';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -15,8 +17,14 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function Display(props) {
+  function SwitchD(){
+    setDC(!DC);
+  }
+
+  let [DC, setDC] = useState(true);
+  
   return (
-    <Collapse in={props.collapse} >
+    
     <Box style={{
         position: "absolute",
         left: 50,
@@ -27,14 +35,11 @@ export default function Display(props) {
     }} sx={{
         border: 1,
         backgroundColor: 'green',
-        opacity: [0.9, 0.8, 0.7],
-        '&:hover': {
-            opacity: [1.0,1.0,1.0],
-          },
+        opacity: [1.0,1.0,1.0],
       }}>
    
 
-
+   
       <Typography variant="subtitle1" gutterBottom component="div">
         Elevation 100
       </Typography>
@@ -42,13 +47,13 @@ export default function Display(props) {
       <Typography variant="subtitle1" gutterBottom component="div">
         Distance 100
       </Typography>
-      <Divider/>
-       
-  
-      
+      <Divider/> 
+      <SwitchDisplay ape={SwitchD} off={DC}/>
+      <Collapse in={DC} >
 
       <Listed/>
+      </Collapse>  
     </Box>
-    </Collapse>
+    
   );
 }

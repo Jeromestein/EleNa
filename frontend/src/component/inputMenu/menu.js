@@ -7,6 +7,7 @@ import Stack from '@mui/material/Stack';
 import { Box } from "@mui/system";
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
+import { Typography } from "@mui/material";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -23,20 +24,25 @@ export default function Menu() {
         top: 50,
         zIndex: 9,
         padding: 20,
-        paddingBottom: 50,
+        paddingBottom: 30,
     }} sx={{
       border: 1,
+      
         width: 300,
-        height: 360,
+        borderRadius: 1,
         backgroundColor: 'green',
-        opacity: [0.9, 0.8, 0.7],
-        '&:hover': {
-            opacity: [1.0,1.0,1.0],
-          },
+        opacity: [1.0,1.0,1.0],
       }}>
+      <Box sx={{ width: '100%', maxWidth: 300 }}>
+        <Typography variant="subtitle2" gutterBottom component="div">
+          subtitle2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
+          blanditiis tenetur  subtitle2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
+          blanditiis tenetur  subtitle2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
+          blanditiis tenetur
+        </Typography>
+      </Box>
    
       <Stack spacing={2}>
-
         <Item><TextInput label="Source"/></Item>
         <Item><TextInput label="Destination" /></Item>
         <Item><MinMax/></Item>
