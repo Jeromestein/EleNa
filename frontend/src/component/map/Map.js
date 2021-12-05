@@ -1,21 +1,25 @@
 import React from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
-import RoutingMachine from "../../RoutingMachine";
+import RoutingMachine from "./RoutingMachine";
 import 'leaflet/dist/leaflet.css'
+import Menu from "../inputMenu/menu";
 
 const Map = (props) => {
+  const route = props.route;
   return (
-    <MapContainer
+    <MapContainer style={{zIndex:1}}
       doubleClickZoom={false}
       id="mapId"
       zoom={14}
-      center={[33.5024, 36.2988]}
+      center={route[Math.floor(route.length/2)]}
     >
+      <RoutingMachine route={route}/>
       <TileLayer
-        url="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"
-        attribution="Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri"
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='© OpenStreetMap contributors'
       />
-      <RoutingMachine/>
+
+      
     </MapContainer>
   );
 };
