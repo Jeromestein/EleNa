@@ -18,16 +18,21 @@ function valuetext(value) {
   return `${value} %`;
 }
 
-export default function Slide() {
+export default function Slide(props) {
   return (
     <Container sx={{ width: 290 }} >
       <Slider
         aria-label="Always visible"
-        defaultValue={80}
+        defaultValue={props.percentage}
         getAriaValueText={valuetext}
         step={10}
         marks={marks}
         valueLabelDisplay="on"
+        onChange={
+          (event, value,activeThumb)=>{
+            props.setPercentage(value)
+          }
+        }
       />
     </Container>
   );
