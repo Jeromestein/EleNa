@@ -1,7 +1,7 @@
 import React from "react";
 import Menu from "./component/inputMenu/menu";
 import Map from "./component/map/Map";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import "./styles.css";
 import Display from "./component/output/output";
@@ -16,9 +16,17 @@ export default function App() {
   const [route, SetRoute] = useState([[42.392611, -72.533832,],[42.39107576463665, -72.53321883848933],[42.38837415353575, -72.53208770671064]])
   const [stat, SetStat] = useState([100,110])
 
+
+
+  function submit(){
+      const go = {source,destination,percentage,max};
+      alert(`send ${source} ${destination} ${percentage} ${max} `);
+      alert(`get ${stat} ${route}`)
+  };
+
   return (
     <div className="App">
-      <Menu source={source} destination={destination} percentage={percentage} setPercentage={SetPercentage} setMax={SetMax} setSource={SetSource} setDestination={SetDestination} setPercentage={SetPercentage} setRoute={SetRoute}/>
+      <Menu submit={submit} source={source} destination={destination} percentage={percentage} setPercentage={SetPercentage} setMax={SetMax} setSource={SetSource} setDestination={SetDestination} setPercentage={SetPercentage} setRoute={SetRoute}/>
       <Display stat={stat} route={route}/>
       <Map route={route}/>
     </div>
