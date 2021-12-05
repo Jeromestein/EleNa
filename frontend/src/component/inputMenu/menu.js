@@ -45,7 +45,7 @@ export default function Menu(props) {
         <Item><TextField label="Destination" value={props.destination} onChange={(event)=>{props.setDestination(event.target.value);}}/></Item>
         <Item><MinMax setMax={props.setMax}/></Item>
         <Item><Slide percentage={props.percentage} setPercentage={props.setPercentage}/></Item>
-        <Button variant="contained">Search</Button>
+        <Button variant="contained" onClick={()=>{props.submit()}}>Search</Button>
   
       </Stack>
     </Box>
