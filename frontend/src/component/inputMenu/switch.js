@@ -3,11 +3,12 @@ import Switch from '@mui/material/Switch';
 import { Container, Typography } from '@mui/material';
 import { Stack } from '@mui/material';
 
-export default function MinMax() {
+export default function MinMax(props) {
   const [checked, setChecked] = React.useState(true);
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
+    props.setMax(event.target.checked);
   };
 
   return (

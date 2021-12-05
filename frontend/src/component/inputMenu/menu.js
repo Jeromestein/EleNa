@@ -1,6 +1,7 @@
 import Slide from "./slider";
 import MinMax from "./switch";
 import TextInput from "./textInput";
+import { TextField } from "@mui/material";
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -16,7 +17,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function Menu() {
+export default function Menu(props) {
   return (
     <Box style={{
         position: "absolute",
@@ -35,18 +36,15 @@ export default function Menu() {
       }}>
       <Box sx={{ width: '100%', maxWidth: 300 }}>
         <Typography variant="subtitle2" gutterBottom component="div">
-          subtitle2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-          blanditiis tenetur  subtitle2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-          blanditiis tenetur  subtitle2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-          blanditiis tenetur
+        EleNa (Elevation-based Navigation) is a routing software that calculates routes based on your preference of route elevation. You may choose to prioritize distance or elevation, depends on what you are looking for.
         </Typography>
       </Box>
    
       <Stack spacing={2}>
-        <Item><TextInput label="Source"/></Item>
-        <Item><TextInput label="Destination" /></Item>
-        <Item><MinMax/></Item>
-        <Item><Slide/></Item>
+        <Item><TextField label="Source" value={props.source} onChange={(event)=>{props.setSource(event.target.value);}}/></Item>
+        <Item><TextField label="Destination" value={props.destination} onChange={(event)=>{props.setDestination(event.target.value);}}/></Item>
+        <Item><MinMax setMax={props.setMax}/></Item>
+        <Item><Slide percentage={props.percentage} setPercentage={props.setPercentage}/></Item>
         <Button variant="contained">Search</Button>
   
       </Stack>

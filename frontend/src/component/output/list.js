@@ -3,33 +3,41 @@ import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import { FixedSizeList } from 'react-window';
+import { List } from '@mui/material';
 
-function renderRow(props) {
-  const { index, style } = props;
 
-  return (
-    <ListItem style={style} key={index} component="div" disablePadding
-    sx={{borderRight: 1, borderLeft:1}}>
-      <ListItemButton>
-        <ListItemText primary={`Item ${index + 1}`} />
-      </ListItemButton>
-    </ListItem>
-  );
-}
 
-export default function Listed() {
-  return (
+export default function Listed(props) {
 
-      <FixedSizeList
-        height={400}
-        width={360}
-        itemSize={46}
-        itemCount={200}
-        overscanCount={5}
+  function renderRow(point,index) {
+  
+    return (
+      <ListItem  key={index} component="div" disablePadding
       >
-        {renderRow}
-      </FixedSizeList>
+        <ListItemButton>
+          <ListItemText primary={`${index} go to ${point}`} />
+        </ListItemButton>
+      </ListItem>
+    );
+  }
+
+  return (
+
+      <List
+      sx={{
+        width: '100%',
+        maxWidth: 360,
+        bgcolor: 'background.paper',
+        position: 'relative',
+        overflow: 'auto',
+        maxHeight: 300,
+        '& ul': { padding: 0 },
+      }}
+      >
+         {props.route.map((value,i) => (
+    renderRow(value,i)
+  ))}
+      </List>
 
   );
 }

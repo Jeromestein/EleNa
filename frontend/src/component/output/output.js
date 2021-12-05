@@ -41,17 +41,17 @@ export default function Display(props) {
 
    
       <Typography variant="subtitle1" gutterBottom component="div">
-        Elevation 100
+        Elevation {props.stat[0]}
       </Typography>
       <Divider/>
       <Typography variant="subtitle1" gutterBottom component="div">
-        Distance 100
+        Distance {props.stat[1]}
       </Typography>
       <Divider/> 
       <SwitchDisplay ape={SwitchD} off={DC}/>
       <Collapse in={DC} >
 
-      <Listed/>
+      <Listed route={props.route}/>
       </Collapse>  
     </Box>
     
