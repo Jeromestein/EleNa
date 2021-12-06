@@ -7,7 +7,7 @@ import Menu from "../inputMenu/menu";
 const Map = (props) => {
   const route = props.route;
   return (
-    <MapContainer style={{zIndex:1}}
+    <MapContainer style={{zIndex:1}} data-testid="Map"
       doubleClickZoom={false}
       id="mapId"
       zoom={14}
