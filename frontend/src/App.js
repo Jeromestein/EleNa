@@ -22,6 +22,15 @@ export default function App() {
       const go = {source,destination,percentage,max};
       alert(`send ${source} ${destination} ${percentage} ${max} `);
       alert(`get ${stat} ${route}`)
+      /*
+        axios.get("api").then((res)=>{
+        const {R,S} = res
+        SetRoute(R)
+        SetStat(S)
+      })
+      
+      
+      */
   };
 
   return (
