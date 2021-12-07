@@ -34,9 +34,9 @@ export default function Menu(props) {
         backgroundColor: 'green',
         opacity: [1.0,1.0,1.0],
       }}>
-      <Box sx={{ width: '100%', maxWidth: 300 }}>
+      <Box sx={{ width: '100%', maxWidth: 300, paddingBottom:2 }}>
         <Typography variant="subtitle2" gutterBottom component="div">
-        EleNa (Elevation-based Navigation) is a routing software that calculates routes based on your preference of route elevation. You may choose to prioritize distance or elevation, depends on what you are looking for.
+        EleNa (Elevation-based Navigation) is a routing software that calculates routes based on your preference of route elevation. You may maximize or minimize elevation, while limiting the distance efficiency relative to the shortest route.
         </Typography>
       </Box>
    

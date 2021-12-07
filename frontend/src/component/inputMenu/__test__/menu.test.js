@@ -6,5 +6,6 @@ import { useState } from "react";
 
 
 it("Menu renders without crashing",()=>{
-   
+    const div = document.createElement("div");
+    render(<Menu />,div);
 })
