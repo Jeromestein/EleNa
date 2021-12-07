@@ -34,6 +34,7 @@ export default function Display(props) {
         paddingBottom: 50,
     }} sx={{
         border: 1,
+        width: 360,
         backgroundColor: 'green',
         opacity: [1.0,1.0,1.0],
       }}>

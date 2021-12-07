@@ -10,11 +10,11 @@ import SwitchDisplay from "./component/collapse/display";
 export default function App() {
 
   const [max,SetMax] = useState(false)
-  const [source,SetSource] = useState(42.39172808705315)
-  const [destination, SetDestination] = useState(-72.52514801414911)
-  const [percentage,SetPercentage] = useState(70)
-  const [route, SetRoute] = useState([[42.392611, -72.533832,],[42.39107576463665, -72.53321883848933],[42.38837415353575, -72.53208770671064]])
-  const [stat, SetStat] = useState([100,110])
+  const [source,SetSource] = useState("")
+  const [destination, SetDestination] = useState("")
+  const [percentage,SetPercentage] = useState(100)
+  const [route, SetRoute] = useState([])
+  const [stat, SetStat] = useState([0,0])
 
 
 
