@@ -31,7 +31,6 @@ export default function Display(props) {
         top: 50,
         zIndex: 9,
         padding: 20,
-        paddingBottom: 50,
     }} sx={{
         border: 1,
         backgroundColor: 'green',
@@ -47,12 +46,6 @@ export default function Display(props) {
       <Typography variant="subtitle1" gutterBottom component="div">
         Distance {props.stat[1]}
       </Typography>
-      <Divider/> 
-      <SwitchDisplay ape={SwitchD} off={DC}/>
-      <Collapse in={DC} >
-
-      <Listed route={props.route}/>
-      </Collapse>  
     </Box>
     
   );
