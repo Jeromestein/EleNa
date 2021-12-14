@@ -1,33 +1,33 @@
 from flask import Flask, request
 from flask_cors import CORS
-import json
-import osmnx as ox
-import networkx as nx
 import pickle as pkl
+import json
 from context import Context
 import strategies
+import osmnx as ox
+import networkx as nx
 
 app = Flask(__name__)
 CORS(app)
-graphs = {}
+maps = {}
 # make it easier for usera and debugging, only load drive mode
-# modes = [("drive", graphs), ("walk", graphs), ("bike", graphs)]
-modes = [("drive", graphs)]
+# modes = [("drive", maps), ("walk", maps), ("bike", maps)]
+modes = [("drive", maps)]
 
 
-def load_graph(method, graphs):
+def loadMap(method, maps):
     with open("data/massachusetts_{}.pkl".format(method), 'rb') as infile:
-        _graph = pkl.load(infile)
-        graphs[method] = _graph
-        print('Loaded {} graph'.format(method))
+        _map = pkl.load(infile)
+        maps[method] = _map
+        print('Load {} map'.format(method))
 
 
 # Load Cached Graphs from Memory
-print("Loading Graphs")
+print("Loading Map")
 for mode in modes:
-    load_graph(mode[0], mode[1])
+    loadMap(mode[0], mode[1])
 
-print("Cached Graphs Loaded!")
+print("Map is already Loaded and saved in Cached!")
 
 
 @app.route("/route", methods=['POST'])
@@ -39,19 +39,21 @@ def route():
     print(data)
 
     # method (drive)
-    graph = graphs['drive']
-    # goal
-    goal = data['max']
-    # algorithm
-    algorithm = data['D']
+    currMap = maps['drive']
+    # maximize the elevation gain or minimize it
+    max = data['max']
+    # choose the algorithm:
+    # True : Dijstra
+    # False: Astar
+    D = data['D']
 
     # Get Lat Long of Address from Nominatim Geocoding API
 
-    start_node = get_node_from_address(graph, data['source'])
-    dest_node = get_node_from_address(graph, data['destination'])
+    src_node = getCoordinates(currMap, data['source'])
+    dest_node = getCoordinates(currMap, data['destination'])
 
     limit = float(data['percentage'])/100
-    return get_route(graph, start_node, dest_node, algorithm, limit=limit, goal=goal)
+    return getRoute(currMap, src_node, dest_node, D, limit, max)
 
     # test return
     # return{"route":
@@ -67,113 +69,46 @@ def route():
     #        }
     #        }
 
+# get the coordinates from the address
 
-def get_route(graph, start_node, dest_node, algorithm='AStar', limit=0, goal='Minimize Elevation Gain'):
-    """
-            Receives requests from front end and extracts data to run the routing function.
 
-            Parameters:
-            -----------
-            graph: networkx Graph
-                The graph to perform the routing algorithm on.
-            start_node: networkx Node
-                The starting node for the graph.
-            dest_node: networkx Node
-                The destination node for the graph.
-            algorithm: String
-                The algorithm to run. ex: AStar, Breadth First Search, Dijkstra
-            limit: Float
-                The percentage that the generated path can deviate from the shortest path.
-            goal: String
-                The objective of the route. ex: Minimize Elevation Gain, Maximize Elevation Gain
+def getCoordinates(currMap, address):
+    latlng = ox.geocode(address)
+    coordinates, distance = ox.get_nearest_node(
+        currMap, latlng, return_dist=True)
 
-            Returns:
-            --------
-                {'path': [[long, lat]], 'path_data': [{elevation, length, grade}]}
-    """
-    print("Setting up right algorithm object")
-    if len(goal.split()) > 1:
-        weight = goal.split()[1]
-        if weight.startswith('Elevation'):
-            weight = 'elevation_change'
-        else:
-            weight = 'grade'
-    if goal.startswith('Min'):
-        method = 'min ' + weight
-    elif goal.startswith('Max'):
-        method = 'max ' + weight
+    return coordinates
+
+
+def getRoute(currMap, src_node, dest_node, D, limit, max):
+    if max == True:
+        method = 'max '
     else:
-        method = 'vanilla'
+        method = 'min '
 
-    if algorithm == 'Breadth First Search':
-        context = Context(strategies.StrategyBFS(graph, limit, method))
-        path = context.run_strategy_route(start_node, dest_node)
+    if D == True:
+        context = Context(strategies.StrategyDijkstra(currMap, limit, method))
+        path = context.run_strategy_route(src_node, dest_node)
 
-    elif algorithm == 'Dijkstra':
-        context = Context(strategies.StrategyDijkstra(graph, limit, method))
-        path = context.run_strategy_route(start_node, dest_node)
-
-    elif algorithm == 'AStar':
-        context = Context(strategies.StrategyAStar(graph, limit, method))
-        path = context.run_strategy_route(start_node, dest_node)
+    else:
+        context = Context(strategies.StrategyAStar(currMap, limit, method))
+        path = context.run_strategy_route(src_node, dest_node)
 
     print(path)
-    path, path_data = prep_path(graph, path)
+    path, path_data = getPathReady(currMap, path)
     return {'path': path, 'path_data': path_data}
 
 
-# Convert an address to a node
-def get_node_from_address(graph, address):
-    """
-                Converts a string address to the closest node on a graph.
-
-                Parameters:
-                -----------
-                graph: networkx Graph
-                    The graph to perform the look up.
-                address: String
-                    The address to convert to a node.
-
-                Returns:
-                --------
-                    node: The closest node to the address given.
-     """
-    try:
-        latlng = ox.geocode(address)
-        node, dist = ox.get_nearest_node(graph, latlng, return_dist=True)
-        if dist > 10000:
-            raise Exception(
-                "{} is not currently included in Routing Capabilities".format(address))
-        return node
-    except:
-        raise Exception("Could not find location '{}'".format(address))
-
-
-def prep_path(graph, path):
-    """
-                Converts the path of nodes to data that can be sent back to the front end.
-
-                Parameters:
-                -----------
-                graph: networkx Graph
-                    The graph to perform the routing algorithm on.
-                path: [networkx Node]
-                    The array of nodes produced by the routing function.
-
-                Returns:
-                --------
-                    final_path: [[long, lat]]
-                    lengths_and_elevations: [{elevation, length, grade}]}
-    """
+def getPathReady(currMap, path):
     final_path = []
     lengths_and_elevations = []
     for i in range(len(path)-1):
         nodeId = path[i]
         nextNode = path[i+1]
-        x = graph.nodes[nodeId]['x']
-        y = graph.nodes[nodeId]['y']
-        elevation = graph.nodes[nodeId]['elevation']
-        edge = graph[nodeId][nextNode][0]
+        x = currMap.nodes[nodeId]['x']
+        y = currMap.nodes[nodeId]['y']
+        elevation = currMap.nodes[nodeId]['elevation']
+        edge = currMap[nodeId][nextNode][0]
         length = 0
         if 'length' in edge:
             length = edge['length']
@@ -184,7 +119,7 @@ def prep_path(graph, path):
         lengths_and_elevations.append(
             {'length': length, 'elevation': elevation, 'grade': grade})
     # Add Last Node
-    lastNode = graph.nodes[nextNode]
+    lastNode = currMap.nodes[nextNode]
     final_path.append((lastNode['x'], lastNode['y']))
     lengths_and_elevations.append(
         {'length': 0, 'elevation': lastNode['elevation']})

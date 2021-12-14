@@ -4,20 +4,23 @@ EleNa (Elevation-based Navigation) is a routing software that calculates routes 
 
 The high-level goal of this project is to develop a software system that determines, given a start and an end location, a route that maximizes or minimizes elevation gain, while limiting the total distance between the two locations to x% of the shortest path.  
 
-## How to Use EleNa
-
-
-
-## Quick Start
-
-
+## How to Build and Run
 
 ### Frontend
+
+```bash
+npm install
+npm start
+```
 
 
 
 ### Backend
 
+```bash
+source venv/bin/activate
+python server.py
+```
 
 
 
