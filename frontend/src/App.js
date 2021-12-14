@@ -16,10 +16,11 @@ export default function App() {
   const [route, SetRoute] = useState([])
   const [stat, SetStat] = useState([0,0])
   const [re,SetRe] = useState(false)
+  const [D,SetD] = useState(true)
 
 
   function submit(){
-      const go = {source,destination,percentage,max};
+      const go = {source,destination,percentage,max, D};
       const res = {};
       fetch('http://localhost:4000/route'
       , {
@@ -27,7 +28,7 @@ export default function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        //param: JSON.stringify(go),
+        body: JSON.stringify(go)
       }
       ).then(res => res.json()).then(
         result=>{
@@ -45,7 +46,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <Menu submit={submit} source={source} destination={destination} percentage={percentage} setPercentage={SetPercentage} setMax={SetMax} setSource={SetSource} setDestination={SetDestination} setPercentage={SetPercentage} setRoute={SetRoute}/>
+      <Menu submit={submit} D={D} setD={SetD} source={source} destination={destination} percentage={percentage} setPercentage={SetPercentage} setMax={SetMax} setSource={SetSource} setDestination={SetDestination} setPercentage={SetPercentage} setRoute={SetRoute}/>
       <Display stat={stat} route={route}/>
       <Map key={re }route={route}/>
     </div>
