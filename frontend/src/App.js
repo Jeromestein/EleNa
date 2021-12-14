@@ -24,7 +24,7 @@ export default function App() {
       const res = {};
       fetch('http://localhost:4000/route'
       , {
-        method: 'GET', // or 'PUT'
+        method: 'POST', // or 'PUT'
         headers: {
           'Content-Type': 'application/json',
         },

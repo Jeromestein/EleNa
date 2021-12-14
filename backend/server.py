@@ -1,12 +1,15 @@
-from flask import Flask
+from flask import Flask, request
 from flask_cors import CORS
+import json
 
 app = Flask(__name__)
 CORS(app)
 
-@app.route("/route")
+@app.route("/route", methods=['POST'])
 def members():
-    
+    data = json.loads(request.data)
+    print(data)
+
     return{ "route": 
         {
             "route":
