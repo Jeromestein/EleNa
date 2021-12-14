@@ -21,24 +21,24 @@ export default function App() {
   function submit(){
       const go = {source,destination,percentage,max};
       const res = {};
-      fetch('http://localhost:5000/route'
+      fetch('http://localhost:4000/route'
       , {
         method: 'GET', // or 'PUT'
         headers: {
           'Content-Type': 'application/json',
         },
-        param: JSON.stringify(go),
+        //param: JSON.stringify(go),
       }
       ).then(res => res.json()).then(
         result=>{
-          alert(result["route"])
-          const {route, distance, elevation} = result
+          alert(result["route"]["route"])
+          const {route, distance, elevation} = result["route"]
           
           SetRoute(route);
           SetStat([distance,elevation])
           SetRe(!re);
         }
-      )
+      ).catch(e=>console.log(e))
 
 
   }
